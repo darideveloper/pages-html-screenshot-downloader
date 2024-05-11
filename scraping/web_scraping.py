@@ -294,6 +294,9 @@ class WebScraping ():
         self.driver.save_screenshot(file_name)
 
     def full_screenshot(self, path: str):
+        
+        self.refresh_selenium()
+        
         # Ref: https://stackoverflow.com/a/52572919/
         original_size = self.driver.get_window_size()
         required_width = self.driver.execute_script(
@@ -301,7 +304,9 @@ class WebScraping ():
         required_height = self.driver.execute_script(
             'return document.body.parentNode.scrollHeight')
         self.driver.set_window_size(required_width, required_height)
-        # driver.save_screenshot(path)  # has scrollbar
+        
+        self.refresh_selenium()
+        
         self.screenshot(path)  # avoids scrollbar
         self.driver.set_window_size(
             original_size['width'], original_size['height'])
